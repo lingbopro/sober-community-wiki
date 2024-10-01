@@ -1,1 +1,24 @@
-{}
+{
+  "ui": {
+    "appBar": {
+      "title": "Sober.js Community Wiki",
+      "github_repo": {
+        "official": "组件库",
+        "community_wiki": "社区文档"
+      }
+    }
+  },
+  "text": {
+    "theme": {
+      "auto": "跟随系统",
+      "lightMode": "亮色模式",
+      "darkMode": "暗色模式"
+    },
+    "github": "GitHub"
+  },
+  "tooltip": {
+    "appBar": {
+      "themeSwitch": "主题切换"
+    }
+  }
+}

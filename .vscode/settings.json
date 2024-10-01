@@ -1,4 +1,5 @@
 {
   "GitCommitPlugin.ShowEmoji": false,
-  "GitCommitPlugin.MaxSubjectCharacters": 60
+  "GitCommitPlugin.MaxSubjectCharacters": 60,
+  "i18n-ally.localesPaths": ["src/locales"]
 }

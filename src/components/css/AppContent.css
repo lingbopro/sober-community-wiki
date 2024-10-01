@@ -1,0 +1,16 @@
+.App-sidebar {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+}
+
+.App-headline {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.App-headline-text {
+    text-transform: none;
+    color: var(--s-color-primary);
+    font-weight: bolder;
+}
