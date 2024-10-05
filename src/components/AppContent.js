@@ -1,5 +1,6 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
+import { routerRootPathList, pathUtils } from '../router';
 import RegistryIcon from './RegistryIcon';
 import './css/AppContent.css';
 
@@ -7,6 +8,7 @@ class AppContent extends React.Component {
     constructor(props) {
         super(props);
         this.drawerRef = React.createRef();
+        this.navbarRef = React.createRef();
         this.themePickerRef = React.createRef();
     }
     componentDidMount() {
@@ -23,14 +25,23 @@ class AppContent extends React.Component {
                     break;
             }
         });
+        this.navbarRef.current?.addEventListener('change', (event) => {
+            window.navigateTo(routerRootPathList[AppContent.navbarLinks[this.navbarRef.current.selectedIndex]]);
+        });
     }
+    static navbarLinks = ['home'];
     render() {
-        // eslint-disable-next-line
         const { t } = this.props;
+        const getNavItemSelected = (index) => pathUtils.isSubPath(this.props.routerPath, routerRootPathList[AppContent.navbarLinks[index]]);
         return (
             <s-drawer ref={this.drawerRef}>
                 <div className="App-sidebar" slot="start">
-                    <s-navigation mode="rail"></s-navigation>
+                    <s-navigation class="App-navbar" mode="rail" ref={this.navbarRef}>
+                        <s-navigation-item selected={getNavItemSelected(0)}>
+                            <RegistryIcon type="home" slot="icon" />
+                            <div slot="text">{t('ui.navbar.home')}</div>
+                        </s-navigation-item>
+                    </s-navigation>
                 </div>
                 <div className="App-content">
                     <s-appbar>
