@@ -74,7 +74,7 @@ class AppContent extends React.Component {
                                 <a href="https://github.com/apprat/sober">{t('ui.appBar.github_repo.official')}</a>
                             </s-popup-menu-item>
                             <s-popup-menu-item>
-                                <a href="https://github.com/lingbopro/sober-commuinty-wiki">{t('ui.appBar.github_repo.community_wiki')}</a>
+                                <a href="https://github.com/lingbopro/sober-community-wiki">{t('ui.appBar.github_repo.community_wiki')}</a>
                             </s-popup-menu-item>
                         </s-popup-menu>
                     </s-appbar>
