@@ -1,7 +1,9 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import { routerRootPathList, pathUtils } from '../router';
+import { routers } from '../router';
+import { pathUtils } from '../utils/routeUtils';
 import RegistryIcon from './RegistryIcon';
+import Menu from './Menu';
 import './css/AppContent.css';
 
 class AppContent extends React.Component {
@@ -25,23 +27,49 @@ class AppContent extends React.Component {
                     break;
             }
         });
-        this.navbarRef.current?.addEventListener('change', (event) => {
-            window.navigateTo(routerRootPathList[AppContent.navbarLinks[this.navbarRef.current.selectedIndex]]);
+        this.navbarRef.current?.addEventListener('change', () => {
+            window.navigateTo(routers[this.navbarRef.current.selectedIndex].path);
         });
     }
-    static navbarLinks = ['home'];
     render() {
         const { t } = this.props;
-        const getNavItemSelected = (index) => pathUtils.isSubPath(this.props.routerPath, routerRootPathList[AppContent.navbarLinks[index]]);
+
+        const navItems = routers.map((current, index) => {
+            return (
+                <s-navigation-item
+                    key={index}
+                    selected={
+                        pathUtils.isPathEqual(this.props.routerPath, current.path) ||
+                        pathUtils.isSubPath(this.props.routerPath, current.path)
+                    }>
+                    <RegistryIcon type={current.icon} slot="icon" />
+                    <div slot="text">{t(`text.menu.${current.id}.name`)}</div>
+                </s-navigation-item>
+            );
+        });
+        const menus =
+            this.props.router.subGroup.length > 0
+                ? this.props.router.subGroup.map((value, index) => {
+                      const items = value.sub.map((sub) => {
+                          return {
+                              component: (
+                                  <>
+                                      <div>{t(`text.menu.${this.props.router.id}.subGroups.${value.id}.sub.${sub.id}.name`)}</div>
+                                  </>
+                              ),
+                          };
+                      });
+                      return <Menu label={t(`text.menu.${this.props.router.id}.subGroups.${value.id}.name`)} item={items} key={index} />;
+                  })
+                : [];
+
         return (
             <s-drawer ref={this.drawerRef}>
                 <div className="App-sidebar" slot="start">
                     <s-navigation class="App-navbar" mode="rail" ref={this.navbarRef}>
-                        <s-navigation-item selected={getNavItemSelected(0)}>
-                            <RegistryIcon type="home" slot="icon" />
-                            <div slot="text">{t('ui.navbar.home')}</div>
-                        </s-navigation-item>
+                        {navItems}
                     </s-navigation>
+                    {this.props.router.subGroup.length > 0 ? <s-scroll-view class="App-sidebar-menu">{menus}</s-scroll-view> : <></>}
                 </div>
                 <div className="App-content">
                     <s-appbar>

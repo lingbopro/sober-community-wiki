@@ -1,6 +1,7 @@
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 import AppContent from './AppContent';
-import { pathUtils } from '../router';
+import { pathUtils, getRouterByPath } from '../utils/routeUtils';
 import './css/App.css';
 
 class App extends React.Component {
@@ -10,12 +11,17 @@ class App extends React.Component {
             path: null,
         };
         this.pageRef = React.createRef();
+        window.navigateTo = this.navigateTo.bind(this);
     }
     componentDidMount() {
         window.addEventListener('hashchange', () => {
             this.navigateToByHash();
         });
         this.navigateToByHash();
+        this.updateDocumentTitle();
+    }
+    componentDidUpdate() {
+        this.updateDocumentTitle();
     }
     navigateToByHash() {
         let hash = pathUtils.parsePath(window.location.hash);
@@ -30,11 +36,17 @@ class App extends React.Component {
         this.setState(state);
         window.location.hash = state.path;
     }
+    updateDocumentTitle() {
+        const { t } = this.props;
+        const title = ` · ${t('text.title')}`;
+        document.title = title;
+    }
     render() {
         return (
             <s-page class="App" ref={this.pageRef} theme="auto">
                 {!pathUtils.isNotFound(this.state.path) ? (
                     <AppContent
+                        router={getRouterByPath(this.state.path)}
                         routerPath={this.state.path}
                         setThemeFunc={(themeType) => {
                             this.pageRef.current.theme = themeType;
@@ -48,4 +60,4 @@ class App extends React.Component {
     }
 }
 
-export default App;
+export default withTranslation()(App);

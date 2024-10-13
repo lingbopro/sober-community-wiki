@@ -12,6 +12,24 @@
     }
   },
   "text": {
+    "title": "Sober.js Community Wiki",
+    "menu": {
+      "home": {
+        "name": "主页"
+      },
+      "introduction": {
+        "name": "概述"
+      },
+      "components": {
+        "name": "组件"
+      },
+      "api": {
+        "name": "API"
+      },
+      "more": {
+        "name": "更多"
+      }
+    },
     "theme": {
       "auto": "跟随系统",
       "lightMode": "亮色模式",

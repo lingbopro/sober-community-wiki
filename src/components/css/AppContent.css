@@ -3,6 +3,12 @@
     flex-direction: row;
     width: auto;
 }
+.App-navbar {
+    flex-shrink: 0;
+}
+.App-sidebar-menu {
+    width: 240px;
+}
 
 .App-headline {
     display: flex;
